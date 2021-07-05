@@ -13,7 +13,7 @@ func GetAudio(id string) audioshort.AudioShort {
 	return audioshort.AudioShort{}
 }
 
-func CreateAudio(as audioshort.AudioShort) (*audioshort.AudioShort, error) {
+func CreateAudio(as audioshort.AudioShort) (*audioshort.AudioShort, *error.RestErr) {
 	fmt.Println("data reviced", as)
 	as.Date = date_utils.GetDateNowString()
 	as.ID = audio_utils.GetUniqueID()
