@@ -18,7 +18,11 @@ func Get(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, restErr)
 		return
 	}
-	result := services.AudioService.GetAudio(id)
+	result, err := services.AudioService.GetAudio(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, err)
+		return
+	}
 	c.JSON(http.StatusOK, result)
 }
 

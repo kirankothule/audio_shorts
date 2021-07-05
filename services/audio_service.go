@@ -16,13 +16,18 @@ var (
 type audioService struct{}
 
 type audioServiceInterface interface {
-	GetAudio(string) *audioshort.AudioShort
+	GetAudio(string) (*audioshort.AudioShort, *rest_utils.RestErr)
 	CreateAudio(audioshort.AudioShort) (*audioshort.AudioShort, *rest_utils.RestErr)
 }
 
-func (audioSvc *audioService) GetAudio(id string) *audioshort.AudioShort {
-	//	return audioshort.Get(id)
-	return &audioshort.AudioShort{}
+func (audioSvc *audioService) GetAudio(id string) (*audioshort.AudioShort, *rest_utils.RestErr) {
+	audio := &audioshort.AudioShort{
+		ID: id,
+	}
+	if err := audio.Get(); err != nil {
+		return nil, err
+	}
+	return audio, nil
 }
 
 func (audioSvc *audioService) CreateAudio(as audioshort.AudioShort) (*audioshort.AudioShort, *rest_utils.RestErr) {
