@@ -6,4 +6,5 @@ import (
 
 func mapUrls() {
 	router.GET("/audio/:audio_id", controllers.Get)
+	router.POST("/audio/", controllers.Create)
 }
