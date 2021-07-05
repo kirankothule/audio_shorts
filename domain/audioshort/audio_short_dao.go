@@ -21,6 +21,8 @@ func (as *AudioShort) Get() *rest_utils.RestErr {
 	result := stmt.QueryRow(as.ID)
 	if getErr := result.Scan(&as.ID, &as.Title, &as.Description,
 		&as.Category, &as.AudioFile, &as.Creator.Name, &as.Creator.Email, &as.Date); getErr != nil {
+
+		logger.Error("Error while scanning data from resultset: ", getErr)
 		return rest_utils.NewNotFoundError("audio file not found")
 	}
 	return nil
@@ -36,7 +38,7 @@ func (as *AudioShort) Save() *rest_utils.RestErr {
 	defer stmt.Close()
 	_, saveErr := stmt.Exec(as.ID, as.Title, as.Description, as.Category, as.AudioFile, as.Creator.Name, as.Creator.Email, as.Date)
 	if saveErr != nil {
-		logger.Error("error while executing statement:", saveErr)
+		logger.Error("error while executing statement: ", saveErr)
 		return rest_utils.NewInternalServerError("Database error")
 	}
 	return nil

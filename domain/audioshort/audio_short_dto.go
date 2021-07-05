@@ -14,3 +14,5 @@ type Creator struct {
 	Name  string `json:"name"`
 	Email string `json:"email"`
 }
+
+type AudioShorts []AudioShort

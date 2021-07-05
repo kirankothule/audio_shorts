@@ -8,6 +8,7 @@ import (
 
 	"github.com/kirankothule/audio_shorts_api/domain/audioshort"
 	"github.com/kirankothule/audio_shorts_api/services"
+	"github.com/kirankothule/audio_shorts_api/utils/audio_utils"
 	"github.com/kirankothule/audio_shorts_api/utils/rest_utils"
 )
 
@@ -23,7 +24,7 @@ func Get(c *gin.Context) {
 		c.JSON(http.StatusNotFound, err)
 		return
 	}
-	c.JSON(http.StatusOK, result)
+	c.JSON(http.StatusOK, result.Marshall(audio_utils.IsPublic(c.Request)))
 }
 
 func Create(c *gin.Context) {
@@ -39,5 +40,5 @@ func Create(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
-	c.JSON(http.StatusCreated, result)
+	c.JSON(http.StatusCreated, result.Marshall(audio_utils.IsPublic(c.Request)))
 }
