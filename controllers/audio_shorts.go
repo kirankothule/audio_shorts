@@ -8,28 +8,28 @@ import (
 
 	"github.com/kirankothule/audio_shorts_api/domain/audioshort"
 	"github.com/kirankothule/audio_shorts_api/services"
-	"github.com/kirankothule/audio_shorts_api/utils/rest_errors"
+	"github.com/kirankothule/audio_shorts_api/utils/rest_utils"
 )
 
 func Get(c *gin.Context) {
 	id := strings.TrimSpace(c.Param("audio_id"))
 	if len(id) == 0 {
-		restErr := rest_errors.NewBadRequestError("Please provied valid id")
+		restErr := rest_utils.NewBadRequestError("Please provied valid id")
 		c.JSON(http.StatusBadRequest, restErr)
 		return
 	}
-	result := services.GetAudio(id)
+	result := services.AudioService.GetAudio(id)
 	c.JSON(http.StatusOK, result)
 }
 
 func Create(c *gin.Context) {
 	var audio audioshort.AudioShort
 	if err := c.ShouldBindJSON(&audio); err != nil {
-		restErr := rest_errors.NewBadRequestError("Please provied valid data")
+		restErr := rest_utils.NewBadRequestError("Please provied valid data")
 		c.JSON(http.StatusBadRequest, restErr)
 		return
 	}
-	result, err := services.CreateAudio(audio)
+	result, err := services.AudioService.CreateAudio(audio)
 	if err != nil {
 
 		c.JSON(http.StatusInternalServerError, err)

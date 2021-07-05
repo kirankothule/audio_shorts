@@ -1,8 +1,6 @@
 package logger
 
 import (
-	"fmt"
-
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -12,7 +10,6 @@ var (
 )
 
 func init() {
-	fmt.Println("we are inside init method for logger")
 	logConfig := zap.Config{
 		OutputPaths: []string{"stdout"},
 		Level:       zap.NewAtomicLevelAt(zap.InfoLevel),
